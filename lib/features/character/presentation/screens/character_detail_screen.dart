@@ -13,12 +13,14 @@ class CharacterDetailScreen extends StatelessWidget {
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
-            expandedHeight: 300,
+            expandedHeight: character.image.isEmpty ? null : 300,
             pinned: true,
             flexibleSpace: FlexibleSpaceBar(
               background: Hero(
                 tag: character.id,
-                child: Image.network(character.image, fit: BoxFit.cover),
+                child: character.image.isEmpty
+                    ? SizedBox.shrink()
+                    : Image.network(character.image, fit: BoxFit.cover),
               ),
             ),
           ),

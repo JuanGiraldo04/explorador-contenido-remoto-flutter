@@ -22,10 +22,12 @@ class CharacterCard extends StatelessWidget {
         contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         leading: Hero(
           tag: character.id,
-          child: CircleAvatar(
-            backgroundImage: NetworkImage(character.image),
-            radius: 28,
-          ),
+          child: character.image.isEmpty
+              ? SizedBox.shrink()
+              : CircleAvatar(
+                  backgroundImage: NetworkImage(character.image),
+                  radius: 28,
+                ),
         ),
         title: Text(
           character.name,
