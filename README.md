@@ -3,6 +3,9 @@
 App Flutter que consume la [Rick and Morty API](https://rickandmortyapi.com) para explorar personajes, episodios y locaciones de la serie.
 
 ---
+# Demo
+
+https://www.loom.com/share/b79aa334c0fe43c9a78d0f2028fba348
 
 ## Por qué Rick and Morty API
 

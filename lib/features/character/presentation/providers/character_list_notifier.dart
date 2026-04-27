@@ -40,6 +40,7 @@ class CharactersState {
 class CharacterListNotifier extends AsyncNotifier<CharactersState> {
   @override
   Future<CharactersState> build() async {
+    state = const AsyncLoading();
     final result = await ref.read(getCharactersProvider).call(page: 1);
     return switch (result) {
       ApiSuccess(:final data) => CharactersState(

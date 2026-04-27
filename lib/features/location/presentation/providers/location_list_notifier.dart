@@ -39,6 +39,7 @@ class LocationsState {
 class LocationListNotifier extends AsyncNotifier<LocationsState> {
   @override
   Future<LocationsState> build() async {
+    state = const AsyncLoading();
     final result = await ref.read(getLocationsProvider).call(page: 1);
     return switch (result) {
       ApiSuccess(:final data) => LocationsState(

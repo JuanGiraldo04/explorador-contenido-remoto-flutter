@@ -28,24 +28,25 @@ class EpisodesState {
     bool? isLoadingMore,
     String? name,
   }) => EpisodesState(
-        episodes: episodes ?? this.episodes,
-        currentPage: currentPage ?? this.currentPage,
-        totalPages: totalPages ?? this.totalPages,
-        isLoadingMore: isLoadingMore ?? this.isLoadingMore,
-        name: name ?? this.name,
-      );
+    episodes: episodes ?? this.episodes,
+    currentPage: currentPage ?? this.currentPage,
+    totalPages: totalPages ?? this.totalPages,
+    isLoadingMore: isLoadingMore ?? this.isLoadingMore,
+    name: name ?? this.name,
+  );
 }
 
 class EpisodeListNotifier extends AsyncNotifier<EpisodesState> {
   @override
   Future<EpisodesState> build() async {
+    state = const AsyncLoading();
     final result = await ref.read(getEpisodesProvider).call(page: 1);
     return switch (result) {
       ApiSuccess(:final data) => EpisodesState(
-          episodes: data.episodes,
-          currentPage: data.currentPage,
-          totalPages: data.totalPages,
-        ),
+        episodes: data.episodes,
+        currentPage: data.currentPage,
+        totalPages: data.totalPages,
+      ),
       ApiError(:final failure) => throw failure,
     };
   }
@@ -57,13 +58,13 @@ class EpisodeListNotifier extends AsyncNotifier<EpisodesState> {
         .call(page: 1, name: name.isEmpty ? null : name);
     state = switch (result) {
       ApiSuccess(:final data) => AsyncData(
-          EpisodesState(
-            episodes: data.episodes,
-            currentPage: data.currentPage,
-            totalPages: data.totalPages,
-            name: name,
-          ),
+        EpisodesState(
+          episodes: data.episodes,
+          currentPage: data.currentPage,
+          totalPages: data.totalPages,
+          name: name,
         ),
+      ),
       ApiError(:final failure) => AsyncError(failure, StackTrace.current),
     };
   }
@@ -85,13 +86,13 @@ class EpisodeListNotifier extends AsyncNotifier<EpisodesState> {
 
     state = switch (result) {
       ApiSuccess(:final data) => AsyncData(
-          EpisodesState(
-            episodes: [...current.episodes, ...data.episodes],
-            currentPage: data.currentPage,
-            totalPages: data.totalPages,
-            name: current.name,
-          ),
+        EpisodesState(
+          episodes: [...current.episodes, ...data.episodes],
+          currentPage: data.currentPage,
+          totalPages: data.totalPages,
+          name: current.name,
         ),
+      ),
       ApiError(:final failure) => AsyncError(failure, StackTrace.current),
     };
   }
@@ -99,5 +100,5 @@ class EpisodeListNotifier extends AsyncNotifier<EpisodesState> {
 
 final episodeListProvider =
     AsyncNotifierProvider<EpisodeListNotifier, EpisodesState>(
-  EpisodeListNotifier.new,
-);
+      EpisodeListNotifier.new,
+    );
